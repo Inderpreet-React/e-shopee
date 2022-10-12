@@ -1,6 +1,10 @@
 import React from "react";
-import PageWrapper from "../PageWrapper";
+import Filters from "../components/Filters";
 
 export default function Home() {
-	return <PageWrapper>Home</PageWrapper>;
+	return (
+		<div className="p-4 h-screen w-full ">
+			<Filters />
+		</div>
+	);
 }
