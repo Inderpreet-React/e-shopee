@@ -29,7 +29,7 @@ export default function Filters() {
 
 	return (
 		<div
-			className={`fixed -left-full w-2/3 z-10 top-0 flex h-full flex-col bg-indigo-500 py-8 px-4 transition-all md:relative md:top-0 md:h-full md:w-1/6 md:flex-col  ${
+			className={`fixed md:shrink-0 -left-full w-2/3 z-10 top-0 flex h-full flex-col bg-indigo-500 py-8 px-4 transition-all md:relative md:top-0 md:h-full md:w-1/6 md:flex-col  ${
 				showSideBar ? "left-0" : ""
 			}`}
 		>
