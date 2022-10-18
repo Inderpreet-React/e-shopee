@@ -4,7 +4,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 export default function Filters() {
 	const [showSideBar, setShowSideBar] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-	const divWrapper = "flex gap-2 items-center text-white";
+	const divWrapper = "flex gap-2 items-center text-white md:text-gray-600";
 
 	const setDimension = () => {
 		setWindowWidth(window.innerWidth);
@@ -29,12 +29,12 @@ export default function Filters() {
 
 	return (
 		<div
-			className={`fixed md:shrink-0 -left-full w-2/3 z-10 top-0 flex h-full flex-col bg-indigo-500 py-8 px-4 transition-all md:relative md:top-0 md:h-full md:w-1/6 md:flex-col  ${
+			className={`fixed md:shrink-0 -left-full bg-indigo-500 md:bg-transparent text-white md:text-gray-600 w-2/3 z-10 top-0 flex h-full flex-col  py-4 px-4 transition-all md:relative md:top-0 md:h-min md:w-1/6 md:flex-col border-2 border-gray-300 rounded ${
 				showSideBar ? "left-0" : ""
 			}`}
 		>
 			<form className="flex flex-col gap-4">
-				<h1 className="text-xl font-semibold text-white">Items</h1>
+				<h1 className="text-xl font-semibold ">Items</h1>
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input type="checkbox" />
@@ -57,7 +57,7 @@ export default function Filters() {
 						<span>Pajamas</span>
 					</div>
 				</div>
-				<h1 className="text-xl font-semibold text-white">Items</h1>
+				<h1 className="text-xl font-semibold ">Items</h1>
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input type="checkbox" />
@@ -92,7 +92,7 @@ export default function Filters() {
 						<span>XXXL</span>
 					</div>
 				</div>
-				<h1 className="text-xl font-semibold text-white">Sort</h1>
+				<h1 className="text-xl font-semibold ">Sort</h1>
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input name="sort" type="radio" />
@@ -111,7 +111,7 @@ export default function Filters() {
 				</button>
 			</form>
 			<div
-				className="visible fixed right-5 bottom-5 z-10 rounded-full bg-indigo-500 p-4 text-white hover:bg-indigo-600 md:hidden"
+				className="visible fixed right-5 bottom-5 z-10 rounded-full bg-indigo-500 p-4 hover:bg-indigo-600 md:hidden"
 				onClick={sidebarHandler}
 			>
 				<AdjustmentsHorizontalIcon className="w-8 h-8" />
