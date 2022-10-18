@@ -4,6 +4,7 @@ import {
 	ArrowRightOnRectangleIcon,
 	ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
 	const currentUser = true;
@@ -13,11 +14,15 @@ export default function Navbar() {
 			<h1 className="font-semibold text-white text-2xl">E-Shopee</h1>
 			<div className="flex gap-4">
 				{currentUser ? (
-					<UserIcon className="text-white h-7 w-7" />
+					<Link to="/login">
+						<UserIcon className="text-white h-7 w-7" />
+					</Link>
 				) : (
-					<ArrowRightOnRectangleIcon className="text-white h-7 w-7" />
+					<ArrowRightOnRectangleIcon className="text-white h-7 w-7 hover:text-gray-200" />
 				)}
-				<ShoppingBagIcon className="text-white h-7 w-7" />
+				<Link to="/cart">
+					<ShoppingBagIcon className="text-white h-7 w-7 hover:text-gray-200" />
+				</Link>
 			</div>
 		</div>
 	);
