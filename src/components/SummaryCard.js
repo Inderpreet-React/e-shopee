@@ -27,7 +27,7 @@ export default function SummaryCard() {
 					</button>
 				</div>
 			</div>
-			<div className="font-semibold">₹ 500/-</div>
+			<div className="font-semibold whitespace-nowrap">₹ 500/-</div>
 		</div>
 	);
 }
