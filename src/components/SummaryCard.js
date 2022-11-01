@@ -1,8 +1,19 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, removeItem } from "../store/cart";
 
 export default function SummaryCard() {
 	const imgLink =
 		"https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1659004146_9433808.jpg?format=webp&w=300&dpr=1.3";
+	const dispatch = useDispatch();
+	const cartItem = useSelector((state) => state.cart.cartItem);
+	console.log(cartItem);
+
+	function removeItemHandler() {
+		// dispatch(addItem(["Jogger", 2, "xl"]));
+		dispatch(removeItem("Jogger"));
+	}
+
 	return (
 		<div className="flex gap-4">
 			<img
@@ -22,7 +33,10 @@ export default function SummaryCard() {
 							Qty: 1
 						</span>
 					</div>
-					<button className=" bg-indigo-500 rounded p-1 text-white min-w-min mt-4">
+					<button
+						onClick={removeItemHandler}
+						className=" bg-indigo-500 rounded p-1 text-white min-w-min mt-4 hover:bg-indigo-600"
+					>
 						Remove
 					</button>
 				</div>
