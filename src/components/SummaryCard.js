@@ -7,7 +7,7 @@ export default function SummaryCard() {
 		"https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1659004146_9433808.jpg?format=webp&w=300&dpr=1.3";
 	const dispatch = useDispatch();
 	const cartItem = useSelector((state) => state.cart.cartItem);
-	console.log(cartItem);
+	// console.log(cartItem);
 
 	function removeItemHandler() {
 		// dispatch(addItem(["Jogger", 2, "xl"]));

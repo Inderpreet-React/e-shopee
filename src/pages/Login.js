@@ -5,11 +5,17 @@ import { Link } from "react-router-dom";
 import LoginSvg from "../images/loginSvg.svg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../store/user";
 
 export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
+	const user = useSelector((state) => state.user.user);
+	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const navigate = useNavigate();
+
+	console.log(user, isAuthenticated);
 
 	async function loginHandler(e) {
 		setLoading(true);

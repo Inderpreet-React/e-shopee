@@ -5,11 +5,13 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
 import ShoopingCart from "./components/ShoopingCart";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
+			<Route path="/products/:productId" element={<ProductDetails />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/signup" element={<Signup />} />
 			<Route path="/cart" element={<ShoopingCart />} />
