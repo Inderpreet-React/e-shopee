@@ -5,7 +5,7 @@ export default function ProductCard(props) {
 		"https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1659004146_9433808.jpg?format=webp&w=300&dpr=1.3";
 
 	return (
-		<div className="w-[45%] md:w-[22%] overflow-hidden">
+		<>
 			<img
 				className="w-full h-auto"
 				src={props.imgLink || imgLink}
@@ -20,6 +20,6 @@ export default function ProductCard(props) {
 					{props.price ? `₹${props.price}` : "₹500/-"}
 				</p>
 			</div>
-		</div>
+		</>
 	);
 }

@@ -9,11 +9,11 @@ export default function ProductDetails() {
 	return (
 		<div className="flex flex-col h-[8vh]">
 			<Navbar />
-			<div className="p-4 md:p-8 h-screen md:h-[92vh] w-full flex flex-col gap-8 md:flex-row">
+			<div className="p-4 md:p-8 md:py-4 h-screen md:h-[92vh] w-full flex flex-col gap-8 md:flex-row">
 				<div>
 					<img src={itemSample[productId]["pImg"]} alt="product" />
 				</div>
-				<div className="flex gap-4 flex-col text-gray-600">
+				<div className="flex gap-4 mb-2 flex-col text-gray-600">
 					<div className="flex flex-col gap-0">
 						<h3 className="text-2xl font-bold">
 							{itemSample[productId]["name"]}
@@ -79,20 +79,28 @@ export default function ProductDetails() {
 						</select>
 					</div>
 					<div className="flex gap-2">
-						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold">
+						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
 							Add to cart
 						</button>
-						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold">
+						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
 							Add to Wishlist
 						</button>
 					</div>
 					<hr></hr>
-					<div>
+					<div className="border-2 border-gray-300 p-4">
 						<h3 className="font-semibold">Product Details</h3>
 						<div className="p-2 pr-0 flex gap-1 flex-col">
 							<p className="font-semibold">Material Details:</p>
 							<p>100% Cotton</p>
 							<p>Machine Wash</p>
+						</div>
+						<div className="p-1 pr-0 flex gap-1 flex-col">
+							<p className="font-semibold">Country of Origin:</p>
+							<p>India</p>
+						</div>
+						<div className="p-1 pr-0 flex gap-1 flex-col">
+							<p className="font-semibold">Manufactured by:</p>
+							<p>E-Shopee Pvt Ltd.</p>
 						</div>
 					</div>
 				</div>
