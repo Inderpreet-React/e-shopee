@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import itemSample from "../itemSample";
+import { addItem } from "../store/cart";
+import { useDispatch } from "react-redux";
 
 export default function ProductDetails() {
 	const { productId } = useParams();
+	const quantityRef = useRef(1);
+	const [size, setSize] = useState("");
+	const [sizeError, setSizeError] = useState(false);
+	const dispatch = useDispatch();
+
+	function radioBtnHandler(e) {
+		setSizeError(false);
+		setSize(e.target.value);
+	}
+
+	function cartHandler() {
+		if (size.length === 0) {
+			setSizeError(true);
+			return;
+		}
+		const data = itemSample[productId];
+		data["size"] = size;
+		data["quantity"] = parseInt(quantityRef.current.value);
+		dispatch(addItem([productId, { ...data }]));
+	}
 
 	return (
 		<div className="flex flex-col h-[8vh]">
@@ -30,42 +52,90 @@ export default function ProductDetails() {
 						<p className="font-bold">Please select the size.</p>
 						<ul className="flex gap-2 flex-wrap">
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="XXS"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>XXS</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="XS"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>XS</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="S"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>S</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="M"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>M</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="L"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>L</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="XL"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>XL</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="XXL"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>XXL</span>
 							</li>
 							<li className="flex items-center gap-1">
-								<input name="size" className="" type="radio" />
+								<input
+									onChange={radioBtnHandler}
+									value="XXXL"
+									name="size"
+									className=""
+									type="radio"
+								/>
 								<span>XXXL</span>
 							</li>
 						</ul>
 					</div>
 					<div className="flex flex-col gap-4 min-w-min">
 						<p>Quantity</p>
-						<select>
+						<select ref={quantityRef}>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -79,7 +149,11 @@ export default function ProductDetails() {
 						</select>
 					</div>
 					<div className="flex gap-2">
-						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
+						<button
+							onClick={cartHandler}
+							disabled={size.length === 0}
+							className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
+						>
 							Add to cart
 						</button>
 						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">

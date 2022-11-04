@@ -7,10 +7,7 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addItem(state, action) {
-			state.cartItem[action.payload[0]] = [
-				action.payload[1],
-				action.payload[2],
-			];
+			state.cartItem[action.payload[0]] = action.payload[1];
 		},
 		removeItem(state, action) {
 			console.log(action);

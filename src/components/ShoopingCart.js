@@ -2,17 +2,35 @@ import React from "react";
 import PageWrapper from "../PageWrapper";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
 import SummaryCard from "./SummaryCard";
+import { useSelector } from "react-redux";
 
 export default function ShoopingCart() {
-	const shoopingCart = true;
+	const cartItems = useSelector((state) => state.cart.cartItem);
+	const cartHasItems = Object.keys(cartItems).length === 0;
+	console.log(cartHasItems);
 
 	return (
 		<PageWrapper>
-			{shoopingCart ? (
+			{!cartHasItems ? (
 				<div className="flex w-full h-full md:flex-row flex-col">
 					<div className="flex flex-col md:flex-row p-4 md:p-8  w-full md:w-2/3 h-full">
 						<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll">
-							<SummaryCard />
+							{cartHasItems ? (
+								<div className="flex flex-col h-full text-gray-600 w-full items-center justify-center text-center">
+									<h1 className="text-2xl font-bold">
+										Your shopping cart is empty.
+									</h1>
+									<p>Please add something soon, carts have feelings too.</p>
+								</div>
+							) : (
+								Object.keys(cartItems).map((item) => (
+									<SummaryCard
+										key={item}
+										productId={item}
+										data={cartItems[item]}
+									/>
+								))
+							)}
 						</div>
 					</div>
 					<div className="flex flex-col md:flex-row p-4 md:p-8  w-full md:w-1/3 h-full">
