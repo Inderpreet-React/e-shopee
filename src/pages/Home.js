@@ -15,11 +15,11 @@ export default function Home() {
 				<div className="flex flex-wrap gap-8 overflow-y-auto h-full">
 					{Object.keys(items).map((itemKey) => (
 						<Link
+							key={itemKey}
 							to={`products/${itemKey}`}
-							className="w-[45%] md:w-[22%] overflow-hidden"
+							className="w-[45%] md:w-[22%] h-min overflow-hidden"
 						>
 							<ProductCard
-								key={itemKey}
 								type={items[itemKey]["type"]}
 								price={items[itemKey]["price"]}
 								imgLink={items[itemKey]["pImg"]}

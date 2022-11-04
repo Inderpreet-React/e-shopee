@@ -12,9 +12,10 @@ export default function ProductCard(props) {
 				alt="clothes"
 			/>
 			<div className="flex flex-col gap-1">
-				<h2 className="border-b-2 text-lg border-spacing-8 font-semibold text-gray-600 border-gray-400">
+				<h2 className="text-lg font-semibold text-gray-600">
 					{props.name || "Default Name"}
 				</h2>
+				<hr></hr>
 				<p className="text-gray-500 text-sm">{props.type || "Joggers"}</p>
 				<p className="font-semibold text-sm text-gray-600">
 					{props.price ? `₹${props.price}` : "₹500/-"}
