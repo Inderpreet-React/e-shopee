@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import itemSample from "../itemSample";
 import { addItem } from "../store/cart";
-import { useDispatch } from "react-redux";
+import { addWishlistItem, removeWishlistItem } from "../store/wishlist";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ProductDetails() {
 	const { productId } = useParams();
 	const quantityRef = useRef(1);
 	const [size, setSize] = useState("");
 	const [sizeError, setSizeError] = useState(false);
+	const cartItems = useSelector((state) => state.cart.cartItem);
+	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const dispatch = useDispatch();
 
 	function radioBtnHandler(e) {
@@ -26,6 +29,10 @@ export default function ProductDetails() {
 		data["size"] = size;
 		data["quantity"] = parseInt(quantityRef.current.value);
 		dispatch(addItem([productId, { ...data }]));
+	}
+
+	function addToWishList() {
+		dispatch(addWishlistItem(productId));
 	}
 
 	return (
@@ -149,16 +156,41 @@ export default function ProductDetails() {
 						</select>
 					</div>
 					<div className="flex gap-2">
-						<button
-							onClick={cartHandler}
-							disabled={size.length === 0}
-							className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
-						>
-							Add to cart
-						</button>
-						<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
-							Add to Wishlist
-						</button>
+						{productId in cartItems ? (
+							<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
+								<Link
+									className="flex items-center justify-center w-full h-full"
+									to="/cart"
+								>
+									Go to your Cart
+								</Link>
+							</button>
+						) : (
+							<button
+								onClick={cartHandler}
+								disabled={size.length === 0}
+								className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
+							>
+								Add to cart
+							</button>
+						)}
+						{!(productId in wishlistItems) ? (
+							<button
+								onClick={addToWishList}
+								className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
+							>
+								Add to Wishlist
+							</button>
+						) : (
+							<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
+								<Link
+									className="flex items-center justify-center w-full h-full"
+									to="/Wishlist"
+								>
+									Go to your Wishlist
+								</Link>
+							</button>
+						)}
 					</div>
 					<hr></hr>
 					<div className="border-2 border-gray-300 p-4">
