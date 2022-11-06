@@ -6,8 +6,12 @@ import { useSelector } from "react-redux";
 
 export default function ShoopingCart() {
 	const cartItems = useSelector((state) => state.cart.cartItem);
+	let cartTotal = 0;
+	Object.keys(cartItems).map(
+		(item) => (cartTotal = cartTotal + cartItems[item].price)
+	);
 	const cartHasItems = Object.keys(cartItems).length === 0;
-	console.log(cartHasItems);
+	console.log(cartTotal);
 
 	return (
 		<PageWrapper>
@@ -30,7 +34,7 @@ export default function ShoopingCart() {
 								<tbody className="divide-y-2 last:divide-y-0">
 									<tr>
 										<th className="text-left py-2">Cart Total</th>
-										<td className="text-right">₹ 500</td>
+										<td className="text-right">₹ {cartTotal}</td>
 									</tr>
 									<tr>
 										<th className="text-left py-2">Discount</th>
@@ -38,11 +42,13 @@ export default function ShoopingCart() {
 									</tr>
 									<tr>
 										<th className="text-left py-2">GST</th>
-										<td className="text-right">₹ {(500 * 18) / 100}</td>
+										<td className="text-right">₹ {(cartTotal * 18) / 100}</td>
 									</tr>
 									<tr>
 										<th className="text-left py-2">Total Amount</th>
-										<td className="text-right">₹ {500 + (500 * 18) / 100}</td>
+										<td className="text-right">
+											₹ {cartTotal + cartTotal * (18 / 100)}
+										</td>
 									</tr>
 								</tbody>
 							</table>
