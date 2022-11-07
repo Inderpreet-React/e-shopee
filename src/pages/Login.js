@@ -47,9 +47,12 @@ export default function Login() {
 
 	return (
 		<PageWrapper>
-			<h1 className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl">
+			<Link
+				to="/"
+				className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl"
+			>
 				E-Shopee
-			</h1>
+			</Link>
 			<div className="h-1/4 w-full bg-indigo-100 md:order-last md:h-3/4 md:w-2/3">
 				<img src={LoginSvg} alt="login" className="h-full w-full" />
 			</div>

@@ -66,9 +66,12 @@ export default function Signup() {
 
 	return (
 		<PageWrapper heightFull={true}>
-			<h1 className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl">
+			<Link
+				to="/"
+				className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl"
+			>
 				E-Shopee
-			</h1>
+			</Link>
 
 			<div className="flex h-1/4 w-full items-center justify-center bg-indigo-100 md:order-last md:h-3/4 md:w-2/3">
 				<img
@@ -80,10 +83,10 @@ export default function Signup() {
 
 			<div className="flex h-3/4 w-3/4 flex-col md:h-5/6 md:w-4/5 md:p-4 md:pl-8 overscroll-y-auto">
 				<div className="flex w-full items-center  justify-between md:pl-[25%]">
-					<h1 className="text-4xl font-bold text-gray-600">Sign up</h1>
+					<h1 className="text-4xl font-bold text-gray-600 w-2/3">Sign up</h1>
 					<Link
 						to="/login"
-						className="text-xl font-semibold italic text-indigo-600 underline underline-offset-8"
+						className="text-xl font-semibold italic w-1/3 text-center text-indigo-600 underline underline-offset-8"
 					>
 						Log in
 					</Link>

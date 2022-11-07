@@ -11,7 +11,9 @@ export default function Navbar() {
 
 	return (
 		<div className="items-center justify-between flex pl-4 pr-4 md:pr-10 py-2 h-full bg-indigo-500">
-			<h1 className="font-semibold text-white text-2xl">E-Shopee</h1>
+			<Link to="/" className="font-semibold text-white text-2xl">
+				E-Shopee
+			</Link>
 			<div className="flex gap-4">
 				{currentUser ? (
 					<Link to="/login">
