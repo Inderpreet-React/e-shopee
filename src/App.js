@@ -6,6 +6,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
 import ShoopingCart from "./components/ShoopingCart";
 import ProductDetails from "./pages/ProductDetails";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 			<Route path="/login" element={<Login />} />
 			<Route path="/signup" element={<Signup />} />
 			<Route path="/cart" element={<ShoopingCart />} />
+			<Route path="/wishlist" element={<Wishlist />} />
 			<Route path="*" element={<PageNotFound />} />
 		</Routes>
 	);
