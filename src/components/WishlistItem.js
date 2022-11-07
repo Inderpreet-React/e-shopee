@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { useSelector, useDispatch } from "react-redux";
+import { removeWishlistItem } from "../store/wishlist";
 
 export default function WishlistItem(props) {
 	const productId = props.productId;
@@ -9,6 +11,13 @@ export default function WishlistItem(props) {
 	const price = data["price"];
 	const type = data["type"];
 	const pImg = data["pImg"];
+	const dispatch = useDispatch();
+	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
+	console.log(wishlistItems);
+
+	function removeFromWishlist() {
+		dispatch(removeWishlistItem(productId));
+	}
 
 	return (
 		<div>
@@ -27,10 +36,10 @@ export default function WishlistItem(props) {
 				</div>
 			</Link>
 			<div className="flex gap-2 mt-1 md:mt-4 text-white p-4 md:p-0">
-				<button className="bg-indigo-600 w-1/2 py-2 flex rounded justify-center items-center">
-					<ShoppingCartIcon className=" w-5 h-5" />
-				</button>
-				<button className="bg-indigo-600 w-1/2 py-2 flex rounded justify-center items-center">
+				<button
+					onClick={removeFromWishlist}
+					className="bg-indigo-600 hover:bg-indigo-800 w-full py-2 flex rounded justify-center items-center"
+				>
 					<TrashIcon className=" w-5 h-5" />
 				</button>
 			</div>
