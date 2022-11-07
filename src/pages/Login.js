@@ -32,7 +32,7 @@ export default function Login() {
 				.then((response) => {
 					console.log(response.user);
 					setLoading(false);
-					navigate("/chat");
+					navigate("/");
 				})
 				.catch((e) => {
 					setError(e.message.replace("Firebase: Error ", "Error: "));

@@ -2,12 +2,7 @@ import React from "react";
 
 export default function SelectCity({ cName }) {
 	return (
-		<select
-			className={cName}
-			required
-			class="form-select jp-form-input py-lg-2"
-			aria-label="Default select example"
-		>
+		<select className={cName} required aria-label="Default select example">
 			<option value="Adilabad">Adilabad</option>
 			<option value="Agra">Agra</option>
 			<option value="Ahmedabad">Ahmedabad</option>
