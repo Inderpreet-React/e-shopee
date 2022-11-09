@@ -4,15 +4,18 @@ import PageWrapper from "../PageWrapper";
 import { Link } from "react-router-dom";
 import SignupSvg from "../images/signupSvg.svg";
 import { updateProfile, createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, storage, db } from "../firebase";
+import { auth, db } from "../firebase";
 import SelectCity from "../components/SelectCity";
+import SelectState from "../components/SelectState";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../store/user";
 
 export default function Signup() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const submitHandler = async (e) => {
 		setLoading(true);
@@ -20,43 +23,44 @@ export default function Signup() {
 		const email = e.target[0].value;
 		const displayName = e.target[1].value;
 		const password = e.target[2].value;
-		const file = e.target[3].files[0];
+		const phoneNo = e.target[3].value;
+		const address = e.target[4].value;
+		const pinCode = e.target[5].value;
+		const city = e.target[6].value;
+		const state = e.target[7].value;
+		console.log(
+			email,
+			displayName,
+			password,
+			phoneNo,
+			address,
+			pinCode,
+			city,
+			state
+		);
 
 		try {
 			// User creation
 			const res = await createUserWithEmailAndPassword(auth, email, password);
-
-			// Image upload
-			const date = new Date().getTime();
-			const storageRef = ref(storage, `${displayName + date}`);
-
-			await uploadBytesResumable(storageRef, file).then(() => {
-				getDownloadURL(storageRef).then(async (downloadURL) => {
-					try {
-						//Update profile
-						await updateProfile(res.user, {
-							displayName,
-							photoURL: downloadURL,
-						});
-						//create user on firestore
-						await setDoc(doc(db, "users", res.user.uid), {
-							uid: res.user.uid,
-							displayName,
-							email,
-							photoURL: downloadURL,
-						});
-
-						//create empty user chats on firestore
-						await setDoc(doc(db, "userChats", res.user.uid), {});
-						setLoading(false);
-						navigate("/chat");
-					} catch (err) {
-						console.log(err);
-						setError(true);
-						setLoading(false);
-					}
-				});
+			console.log("res ran");
+			dispatch(loginUser(res.user));
+			const userRef = await updateProfile(res.user, {
+				displayName: displayName,
+				phoneNumber: phoneNo,
 			});
+			console.log("user updated", userRef);
+			const dbRes = await setDoc(doc(db, "users", res.user.uid), {
+				address,
+				pinCode,
+				city,
+				state,
+				previousOrders: [],
+				userCart: [],
+				userWishlist: [],
+			});
+			console.log("databases created", dbRes);
+			setLoading(false);
+			navigate("/");
 		} catch (err) {
 			setError(true);
 			setLoading(false);
@@ -130,6 +134,10 @@ export default function Signup() {
 						<div className="input-wrapper">
 							<p className="text-gray-600">City</p>
 							<SelectCity cName={"text-gray-600"} />
+						</div>
+						<div className="input-wrapper">
+							<p className="text-gray-600">City</p>
+							<SelectState cName={"text-gray-600"} />
 						</div>
 						<button
 							className={`w-1/2 self-end my-2 rounded bg-indigo-500 px-8 py-3 font-semibold text-white transition hover:bg-indigo-600 disabled:text-gray-400 md:w-2/3 ${
