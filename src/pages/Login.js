@@ -14,6 +14,7 @@ export default function Login() {
 	const user = useSelector((state) => state.user.user);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	console.log(user, isAuthenticated);
 
@@ -32,6 +33,7 @@ export default function Login() {
 				.then((response) => {
 					console.log(response.user);
 					setLoading(false);
+					dispatch(loginUser(response.user));
 					navigate("/");
 				})
 				.catch((e) => {

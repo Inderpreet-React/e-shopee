@@ -35,7 +35,7 @@ export default function Navbar() {
 				) : (
 					<ArrowRightOnRectangleIcon
 						onClick={logoutHandler}
-						className="text-white h-7 w-7 hover:text-gray-200"
+						className="text-white h-7 w-7 hover:text-gray-200 cursor-pointer"
 					/>
 				)}
 				<Link to="/cart">
