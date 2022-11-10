@@ -19,6 +19,8 @@ export default function ProductDetails() {
 	const [Images, setImages] = useState([]);
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
+	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -184,43 +186,56 @@ export default function ProductDetails() {
 									<option value="10">10</option>
 								</select>
 							</div>
-							<div className="flex gap-2">
-								{productId in cartItems ? (
-									<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
-										<Link
-											className="flex items-center justify-center w-full h-full"
-											to="/cart"
+							{isAuthenticated ? (
+								<div className="flex gap-2">
+									{productId in cartItems ? (
+										<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
+											<Link
+												className="flex items-center justify-center w-full h-full"
+												to="/cart"
+											>
+												Go to your Cart
+											</Link>
+										</button>
+									) : (
+										<button
+											onClick={cartHandler}
+											disabled={size.length === 0}
+											className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
 										>
-											Go to your Cart
-										</Link>
-									</button>
-								) : (
-									<button
-										onClick={cartHandler}
-										disabled={size.length === 0}
-										className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
-									>
-										Add to cart
-									</button>
-								)}
-								{!(productId in wishlistItems) ? (
-									<button
-										onClick={addToWishList}
-										className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
-									>
-										Add to Wishlist
-									</button>
-								) : (
-									<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
-										<Link
-											className="flex items-center justify-center w-full h-full"
-											to="/Wishlist"
+											Add to cart
+										</button>
+									)}
+									{!(productId in wishlistItems) ? (
+										<button
+											onClick={addToWishList}
+											className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
 										>
-											Go to your Wishlist
-										</Link>
-									</button>
-								)}
-							</div>
+											Add to Wishlist
+										</button>
+									) : (
+										<button className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700">
+											<Link
+												className="flex items-center justify-center w-full h-full"
+												to="/Wishlist"
+											>
+												Go to your Wishlist
+											</Link>
+										</button>
+									)}
+								</div>
+							) : (
+								<p className="text-lg">
+									Please{" "}
+									<Link
+										className="font-semibold underline text-indigo-500"
+										to="/login"
+									>
+										Login
+									</Link>{" "}
+									to purchase the item.
+								</p>
+							)}
 							<hr></hr>
 							<div className="border-2 border-gray-300 p-4">
 								<h3 className="font-semibold">Product Details</h3>
