@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import PageLoader from "../components/PageLoader";
 
 export default function Home() {
 	// const items = itemSample;
@@ -30,7 +31,7 @@ export default function Home() {
 	});
 
 	return (
-		<div className="flex flex-col h-[8vh]">
+		<div className="flex flex-col">
 			{!loading ? (
 				<>
 					<Navbar />
@@ -55,7 +56,7 @@ export default function Home() {
 					</div>
 				</>
 			) : (
-				""
+				<PageLoader message={"Loading Products..."} />
 			)}
 		</div>
 	);

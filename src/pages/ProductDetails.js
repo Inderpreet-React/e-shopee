@@ -7,6 +7,7 @@ import { addWishlistItem, removeWishlistItem } from "../store/wishlist";
 import { useDispatch, useSelector } from "react-redux";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import PageLoader from "../components/PageLoader";
 
 export default function ProductDetails() {
 	const { productId } = useParams();
@@ -60,7 +61,7 @@ export default function ProductDetails() {
 	}
 
 	return (
-		<div className="flex flex-col h-[8vh]">
+		<div className="flex flex-col">
 			{!loading ? (
 				<>
 					<Navbar />
@@ -241,7 +242,7 @@ export default function ProductDetails() {
 					</div>
 				</>
 			) : (
-				<div>Loading</div>
+				<PageLoader message={"Loading Product Details..."} />
 			)}
 		</div>
 	);
