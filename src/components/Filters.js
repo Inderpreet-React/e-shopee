@@ -57,7 +57,7 @@ export default function Filters() {
 						<span>Pajamas</span>
 					</div>
 				</div>
-				<h1 className="text-xl font-semibold ">Items</h1>
+				<h1 className="text-xl font-semibold ">Size</h1>
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input type="checkbox" />
