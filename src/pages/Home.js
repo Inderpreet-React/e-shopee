@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Filters from "../components/Filters";
 import ProductCard from "../components/ProductCard";
 import itemSample from "../itemSample";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-	const items = itemSample;
+	// const items = itemSample;
+	const [loading, setLoading] = useState(false);
+	const [items, setItems] = useState([]);
+
+	useEffect(() => {
+		async function fetchData() {
+			const querySnapshot = await getDocs(collection(db, "products"));
+			querySnapshot.forEach((doc) => {
+				const newData = doc.data();
+				newData["id"] = doc.id;
+				setItems((prevState) => {
+					return [...prevState, newData];
+				});
+			});
+		}
+		if (items.length === 0) {
+			fetchData();
+		}
+	});
+
 	return (
 		<div className="flex flex-col h-[8vh]">
 			<Navbar />
@@ -16,7 +37,7 @@ export default function Home() {
 					{Object.keys(items).map((itemKey) => (
 						<Link
 							key={itemKey}
-							to={`products/${itemKey}`}
+							to={`products/${items[itemKey]["id"]}`}
 							className="w-[45%] md:w-[22%] h-min overflow-hidden"
 						>
 							<ProductCard
