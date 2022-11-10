@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
+import {
+	addFilterItem,
+	removeFilterItem,
+	addFilterSize,
+	removeFilterSize,
+	changeFilterSort,
+} from "../store/filters";
+import { useDispatch } from "react-redux";
 
 export default function Filters() {
 	const [showSideBar, setShowSideBar] = useState(false);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const divWrapper = "flex gap-2 items-center text-white md:text-gray-600";
+	const dispatch = useDispatch();
+
+	function submitHandler(e) {
+		e.preventDefault();
+		console.log(e.target[0].value);
+	}
 
 	const setDimension = () => {
 		setWindowWidth(window.innerWidth);
@@ -33,27 +47,27 @@ export default function Filters() {
 				showSideBar ? "left-0" : ""
 			}`}
 		>
-			<form className="flex flex-col gap-4">
+			<form onSubmit={submitHandler} className="flex flex-col gap-4">
 				<h1 className="text-xl font-semibold ">Items</h1>
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
-						<input type="checkbox" />
+						<input value="t-shirt" type="checkbox" />
 						<span>T-shirts</span>
 					</div>
 					<div className={divWrapper}>
-						<input type="checkbox" />
+						<input value="shirt" type="checkbox" />
 						<span>Shirts</span>
 					</div>
 					<div className={divWrapper}>
-						<input type="checkbox" />
+						<input value="jeans" type="checkbox" />
 						<span>Jeans</span>
 					</div>
 					<div className={divWrapper}>
-						<input type="checkbox" />
+						<input value="joggers" type="checkbox" />
 						<span>Joggers</span>
 					</div>
 					<div className={divWrapper}>
-						<input type="checkbox" />
+						<input value="pajamas" type="checkbox" />
 						<span>Pajamas</span>
 					</div>
 				</div>
