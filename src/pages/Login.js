@@ -34,7 +34,7 @@ export default function Login() {
 					console.log(response.user);
 					setLoading(false);
 					dispatch(loginUser(response.user));
-					navigate("/");
+					navigate(-1);
 				})
 				.catch((e) => {
 					setError(e.message.replace("Firebase: Error ", "Error: "));
