@@ -33,7 +33,6 @@ export default function Login() {
 				.then((response) => {
 					console.log(response.user);
 					setLoading(false);
-					dispatch(loginUser(response.user));
 					navigate(-1);
 				})
 				.catch((e) => {

@@ -29,7 +29,6 @@ export default function ProductDetails() {
 			const docRef = doc(db, "products", productId);
 			const docSnap = await getDoc(docRef);
 			if (docSnap.exists()) {
-				console.log(docSnap.data());
 				setProductDetails(docSnap.data());
 				setImages([docSnap.data()["pImg"], ...docSnap.data()["sImg"]]);
 			} else {

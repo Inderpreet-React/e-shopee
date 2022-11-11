@@ -16,7 +16,6 @@ export default function Navbar() {
 	const dispatch = useDispatch();
 
 	function logoutHandler() {
-		console.log("signout Ran");
 		signOut(auth)
 			.then(dispatch(logoutUser()))
 			.catch((e) => console.log(e, "some error happened"));
