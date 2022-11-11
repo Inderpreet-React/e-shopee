@@ -12,6 +12,7 @@ import { db, auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { loginUser, logoutUser } from "./store/user";
+import { updateWishlist } from "./store/wishlist";
 
 function App() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
@@ -30,6 +31,28 @@ function App() {
 		});
 
 		return unsub;
+	}, []);
+
+	useEffect(() => {
+		const unsub = () => {
+			if (isAuthenticated) {
+				// console.log("uid", currentUser.payload.uid);
+				const q = doc(db, "users", currentUser.payload.uid);
+				onSnapshot(q, (doc) => {
+					if (doc.exists()) {
+						console.log("wishlist useEffect ran");
+						dispatch(updateWishlist(doc.data().userWishlist));
+					} else {
+						console.log("There was some error fetching the data");
+					}
+				});
+			} else {
+				dispatch(updateWishlist({}));
+			}
+		};
+		return () => {
+			unsub();
+		};
 	}, []);
 
 	return (
