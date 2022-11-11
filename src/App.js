@@ -7,12 +7,13 @@ import Home from "./pages/Home";
 import ShoopingCart from "./components/ShoopingCart";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
-import { onSnapshot, query, doc } from "firebase/firestore";
+import { onSnapshot, doc } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { loginUser, logoutUser } from "./store/user";
 import { updateWishlist } from "./store/wishlist";
+import { updateCart } from "./store/cart";
 
 function App() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
@@ -39,6 +40,7 @@ function App() {
 				if (doc.exists()) {
 					console.log("wishlist useEffect ran");
 					dispatch(updateWishlist(doc.data().userWishlist));
+					dispatch(updateCart(doc.data().userCart));
 				} else {
 					console.log("There was some error fetching the data");
 				}
@@ -46,6 +48,7 @@ function App() {
 		} else {
 			console.log("isAuth", isAuthenticated);
 			dispatch(updateWishlist([]));
+			dispatch(updateCart([]));
 		}
 	}, [isAuthenticated]);
 

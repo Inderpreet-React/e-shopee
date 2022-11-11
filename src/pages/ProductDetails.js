@@ -22,6 +22,7 @@ export default function ProductDetails() {
 	const [size, setSize] = useState("");
 	const [sizeError, setSizeError] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [updatingData, setUpdatingData] = useState(false);
 	const [productDetails, setProductDetails] = useState(false);
 	const [Images, setImages] = useState([]);
 	const cartItems = useSelector((state) => state.cart.cartItem);
@@ -29,7 +30,7 @@ export default function ProductDetails() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const currentUser = useSelector((state) => state.user.user);
 
-	const dispatch = useDispatch();
+	console.log("test", productId in cartItems);
 
 	useEffect(() => {
 		async function fetchProductDetails() {
@@ -54,28 +55,42 @@ export default function ProductDetails() {
 		setSize(e.target.value);
 	}
 
-	function cartHandler() {
+	async function cartHandler() {
 		if (size.length === 0) {
 			setSizeError(true);
 			return;
 		}
-		const data = itemSample[productId];
-		data["size"] = size;
-		data["quantity"] = parseInt(quantityRef.current.value);
-		dispatch(addItem([productId, { ...data }]));
+		setUpdatingData(true);
+		try {
+			const cartRef = doc(db, "users", currentUser.payload.uid);
+			const res = await setDoc(
+				cartRef,
+				{
+					userCart: {
+						[productId]: { size: size, quantity: quantityRef.current.value },
+					},
+				},
+				{ merge: true }
+			);
+			console.log("res", res);
+			setUpdatingData(false);
+		} catch (e) {
+			console.log("There was some error pls try again: ", e);
+			setUpdatingData(false);
+		}
 	}
 
 	async function addToWishList() {
-		setLoading(true);
+		setUpdatingData(true);
 		try {
 			const docRef = doc(db, "users", currentUser.payload.uid);
 			await updateDoc(docRef, {
 				userWishlist: arrayUnion(productId),
 			});
-			setLoading(false);
+			setUpdatingData(false);
 		} catch (e) {
 			console.log("There was some error pls try again: ", e);
-			setLoading(false);
+			setUpdatingData(false);
 		}
 	}
 
@@ -203,6 +218,9 @@ export default function ProductDetails() {
 									<option value="10">10</option>
 								</select>
 							</div>
+							{sizeError && (
+								<p className="text-rose-500">Please select the size</p>
+							)}
 							{isAuthenticated ? (
 								<div className="flex gap-2">
 									{productId in cartItems ? (
@@ -217,7 +235,7 @@ export default function ProductDetails() {
 									) : (
 										<button
 											onClick={cartHandler}
-											disabled={size.length === 0}
+											disabled={updatingData}
 											className="disabled:cursor-not-allowed w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
 										>
 											Add to cart
@@ -226,7 +244,7 @@ export default function ProductDetails() {
 									{!wishlistItems.includes(productId) ? (
 										<button
 											onClick={addToWishList}
-											disabled={loading}
+											disabled={updatingData}
 											className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700 disabled:cursor-not-allowed"
 										>
 											Add to Wishlist
