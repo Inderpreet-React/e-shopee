@@ -4,7 +4,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
-import ShoopingCart from "./components/ShoopingCart";
+import ShoopingCart from "./pages/ShoopingCart";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import { onSnapshot, doc } from "firebase/firestore";

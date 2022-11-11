@@ -1,7 +1,7 @@
 import React from "react";
 import PageWrapper from "../PageWrapper";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
-import SummaryCard from "./SummaryCard";
+import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
 
 export default function ShoopingCart() {
