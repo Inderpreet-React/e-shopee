@@ -5,7 +5,14 @@ import itemSample from "../itemSample";
 import { addItem } from "../store/cart";
 import { addWishlistItem, removeWishlistItem } from "../store/wishlist";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, getDoc } from "firebase/firestore";
+import {
+	arrayUnion,
+	collection,
+	doc,
+	getDoc,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import PageLoader from "../components/PageLoader";
 
@@ -20,6 +27,7 @@ export default function ProductDetails() {
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+	const currentUser = useSelector((state) => state.user.user);
 
 	const dispatch = useDispatch();
 
@@ -57,8 +65,18 @@ export default function ProductDetails() {
 		dispatch(addItem([productId, { ...data }]));
 	}
 
-	function addToWishList() {
-		dispatch(addWishlistItem(productId));
+	async function addToWishList() {
+		setLoading(true);
+		try {
+			const docRef = doc(db, "users", currentUser.payload.uid);
+			await updateDoc(docRef, {
+				userWishlist: arrayUnion(productId),
+			});
+			setLoading(false);
+		} catch (e) {
+			console.log("There was some error pls try again: ", e);
+			setLoading(false);
+		}
 	}
 
 	return (
@@ -205,10 +223,11 @@ export default function ProductDetails() {
 											Add to cart
 										</button>
 									)}
-									{!(productId in wishlistItems) ? (
+									{!wishlistItems.includes(productId) ? (
 										<button
 											onClick={addToWishList}
-											className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700"
+											disabled={loading}
+											className="w-1/2 py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-700 disabled:cursor-not-allowed"
 										>
 											Add to Wishlist
 										</button>

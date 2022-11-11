@@ -34,26 +34,20 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		const unsub = () => {
-			if (isAuthenticated) {
-				// console.log("uid", currentUser.payload.uid);
-				const q = doc(db, "users", currentUser.payload.uid);
-				onSnapshot(q, (doc) => {
-					if (doc.exists()) {
-						console.log("wishlist useEffect ran");
-						dispatch(updateWishlist(doc.data().userWishlist));
-					} else {
-						console.log("There was some error fetching the data");
-					}
-				});
-			} else {
-				dispatch(updateWishlist({}));
-			}
-		};
-		return () => {
-			unsub();
-		};
-	}, []);
+		if (isAuthenticated) {
+			return onSnapshot(doc(db, "users", currentUser.payload.uid), (doc) => {
+				if (doc.exists()) {
+					console.log("wishlist useEffect ran");
+					dispatch(updateWishlist(doc.data().userWishlist));
+				} else {
+					console.log("There was some error fetching the data");
+				}
+			});
+		} else {
+			console.log("isAuth", isAuthenticated);
+			dispatch(updateWishlist([]));
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<Routes>

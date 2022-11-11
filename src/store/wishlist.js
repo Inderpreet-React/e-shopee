@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { wishlistItem: {} };
+const initialState = { wishlistItem: [] };
 
 const wishlistSlice = createSlice({
 	name: "wishlist",

@@ -16,8 +16,6 @@ export default function Login() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	console.log(user, isAuthenticated);
-
 	async function loginHandler(e) {
 		setLoading(true);
 		e.preventDefault();
@@ -31,7 +29,6 @@ export default function Login() {
 
 			signInWithEmailAndPassword(auth, email.trim(), password.trim())
 				.then((response) => {
-					console.log(response.user);
 					setLoading(false);
 					navigate(-1);
 				})
