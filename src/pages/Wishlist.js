@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../PageWrapper";
 import WishlistItem from "../components/WishlistItem";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
-import { addItem } from "../store/cart";
-import { useSelector, useDispatch } from "react-redux";
-import itemSample from "../itemSample";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function Wishlist() {
