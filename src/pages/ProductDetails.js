@@ -51,7 +51,7 @@ export default function ProductDetails() {
 		setUpdatingData(true);
 		try {
 			const cartRef = doc(db, "users", userUid);
-			const res = await setDoc(
+			await setDoc(
 				cartRef,
 				{
 					userCart: {
