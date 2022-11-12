@@ -10,6 +10,7 @@ import {
 	collection,
 	doc,
 	getDoc,
+	onSnapshot,
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
@@ -28,7 +29,7 @@ export default function ProductDetails() {
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-	const currentUser = useSelector((state) => state.user.user);
+	const userUid = useSelector((state) => state.user.userUid);
 
 	console.log("test", productId in cartItems);
 
@@ -62,7 +63,7 @@ export default function ProductDetails() {
 		}
 		setUpdatingData(true);
 		try {
-			const cartRef = doc(db, "users", currentUser.payload.uid);
+			const cartRef = doc(db, "users", userUid);
 			const res = await setDoc(
 				cartRef,
 				{
@@ -83,7 +84,7 @@ export default function ProductDetails() {
 	async function addToWishList() {
 		setUpdatingData(true);
 		try {
-			const docRef = doc(db, "users", currentUser.payload.uid);
+			const docRef = doc(db, "users", userUid.payload.uid);
 			await updateDoc(docRef, {
 				userWishlist: arrayUnion(productId),
 			});

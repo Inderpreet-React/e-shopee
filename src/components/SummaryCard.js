@@ -1,9 +1,13 @@
-import React from "react";
+import { deleteField, doc, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { db } from "../firebase";
 import { removeItem } from "../store/cart";
+import { useSelector } from "react-redux";
 
 export default function SummaryCard(props) {
 	const productId = props.productId;
+	const [loading, setLoading] = useState(false);
 	const data = props.data;
 	const name = data["name"];
 	const type = data["type"];
@@ -11,12 +15,28 @@ export default function SummaryCard(props) {
 	const quantity = data["quantity"];
 	const imgLink = data["pImg"];
 	const price = data["price"];
+	const userUid = useSelector((state) => state.user.userUid);
 	const dispatch = useDispatch();
 
-	function removeItemHandler() {
-		// dispatch(addItem(["Jogger", 2, "xl"]));
-		dispatch(removeItem(productId));
-	}
+	// async function removeItemHandler() {
+	// 	// dispatch(addItem(["Jogger", 2, "xl"]));
+	// 	// dispatch(removeItem(productId));
+	// 	console.log("1 part");
+	// 	setLoading(false);
+	// 	try {
+	// 		const itemRef = doc(db, "users", userUid);
+	// 		console.log("2 part", `userCart.${productId}`);
+	// 		const res = await updateDoc(itemRef, {
+	// 			[`userCart.${productId}`]: deleteField(),
+	// 		});
+	// 		console.log("3 part", res, typeof setRerender);
+	// 		setLoading(false);
+	// 		props.setRerender(productId);
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 		setLoading(false);
+	// 	}
+	// }
 
 	return (
 		<div className="flex gap-4">
@@ -38,8 +58,9 @@ export default function SummaryCard(props) {
 						</span>
 					</div>
 					<button
-						onClick={removeItemHandler}
-						className=" bg-indigo-500 rounded p-1 text-white min-w-min mt-4 hover:bg-indigo-600"
+						disabled={loading}
+						// onClick={removeItemHandler}
+						className=" bg-indigo-500 disabled:bg-indigo-600 disabled:cursor-not-allowed rounded p-1 text-white min-w-min mt-4 hover:bg-indigo-600"
 					>
 						Remove
 					</button>

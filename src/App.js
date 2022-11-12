@@ -17,7 +17,7 @@ import { updateCart } from "./store/cart";
 
 function App() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-	const currentUser = useSelector((state) => state.user.user);
+	const userUid = useSelector((state) => state.user.userUid);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -36,7 +36,7 @@ function App() {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			return onSnapshot(doc(db, "users", currentUser.payload.uid), (doc) => {
+			return onSnapshot(doc(db, "users", userUid), (doc) => {
 				if (doc.exists()) {
 					console.log("wishlist useEffect ran");
 					dispatch(updateWishlist(doc.data().userWishlist));

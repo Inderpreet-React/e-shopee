@@ -3,7 +3,7 @@ import PageWrapper from "../PageWrapper";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
 import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function ShoopingCart() {
@@ -12,6 +12,7 @@ export default function ShoopingCart() {
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const cartProducts = Object.keys(cartItems);
 	const [cartTotal, setCartTotal] = useState(0);
+	const [rerender, setRerender] = useState("");
 
 	useEffect(() => {
 		async function fetchData() {
@@ -59,7 +60,12 @@ export default function ShoopingCart() {
 						{!fetching ? (
 							<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll">
 								{Object.keys(data).map((item) => (
-									<SummaryCard key={item} productId={item} data={data[item]} />
+									<SummaryCard
+										key={item}
+										productId={item}
+										data={data[item]}
+										setRerender={setRerender}
+									/>
 								))}
 							</div>
 						) : (

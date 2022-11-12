@@ -11,7 +11,7 @@ import { loginUser } from "../store/user";
 export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const user = useSelector((state) => state.user.user);
+	const userUid = useSelector((state) => state.user.userUid);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
