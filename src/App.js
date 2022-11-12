@@ -22,9 +22,7 @@ function App() {
 
 	useEffect(() => {
 		const unsub = onAuthStateChanged(auth, (user) => {
-			// console.log("auth observer ran");
 			if (user) {
-				// console.log(user.uid);
 				dispatch(loginUser(user));
 			} else {
 				dispatch(logoutUser());
@@ -38,7 +36,6 @@ function App() {
 		if (isAuthenticated) {
 			return onSnapshot(doc(db, "users", userUid), (doc) => {
 				if (doc.exists()) {
-					console.log("wishlist useEffect ran");
 					dispatch(updateWishlist(doc.data().userWishlist));
 					dispatch(updateCart(doc.data().userCart));
 				} else {
@@ -46,7 +43,6 @@ function App() {
 				}
 			});
 		} else {
-			console.log("isAuth", isAuthenticated);
 			dispatch(updateWishlist([]));
 			dispatch(updateCart([]));
 		}

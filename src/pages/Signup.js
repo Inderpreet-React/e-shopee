@@ -28,27 +28,15 @@ export default function Signup() {
 		const pinCode = e.target[5].value;
 		const city = e.target[6].value;
 		const state = e.target[7].value;
-		console.log(
-			email,
-			displayName,
-			password,
-			phoneNo,
-			address,
-			pinCode,
-			city,
-			state
-		);
 
 		try {
 			// User creation
 			const res = await createUserWithEmailAndPassword(auth, email, password);
-			console.log("res ran");
 			dispatch(loginUser(res.user));
-			const userRef = await updateProfile(res.user, {
+			await updateProfile(res.user, {
 				displayName: displayName,
 				phoneNumber: phoneNo,
 			});
-			console.log("user updated", userRef);
 			const dbRes = await setDoc(doc(db, "users", res.user.uid), {
 				address,
 				pinCode,
@@ -58,7 +46,6 @@ export default function Signup() {
 				userCart: [],
 				userWishlist: [],
 			});
-			console.log("databases created", dbRes);
 			setLoading(false);
 			navigate("/");
 		} catch (err) {

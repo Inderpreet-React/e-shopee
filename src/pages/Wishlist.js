@@ -8,7 +8,6 @@ import itemSample from "../itemSample";
 
 export default function Wishlist() {
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
-	console.log(wishlistItems);
 	const renderedItems = Object.keys(wishlistItems).map((item) => (
 		<WishlistItem key={item} productId={item} data={itemSample[item]} />
 	));

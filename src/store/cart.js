@@ -10,7 +10,6 @@ const cartSlice = createSlice({
 			state.cartItem[action.payload[0]] = action.payload[1];
 		},
 		removeItem(state, action) {
-			console.log(action);
 			delete state.cartItem[action.payload];
 		},
 		updateCart(state, action) {

@@ -25,7 +25,6 @@ export default function ShoopingCart() {
 							newData[doc.id] = doc.data();
 							newData[doc.id]["quantity"] = cartItems[doc.id]["quantity"];
 							newData[doc.id]["size"] = cartItems[doc.id]["size"];
-							// console.log(newData);
 							return newData;
 						});
 					}
@@ -33,7 +32,6 @@ export default function ShoopingCart() {
 				// cartTotal = cartTotal + data[item].price
 				Object.keys(data).map((item) =>
 					setCartTotal((prevState) => {
-						console.log(prevState + data[item]["price"]);
 						const newValue = prevState + data[item]["price"];
 						return newValue;
 					})
@@ -49,7 +47,6 @@ export default function ShoopingCart() {
 	}, []);
 
 	const cartHasItems = Object.keys(cartItems).length === 0;
-	// console.log(cartTotal);
 
 	return (
 		<PageWrapper>

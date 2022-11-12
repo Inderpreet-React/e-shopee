@@ -20,8 +20,6 @@ export default function ProductDetails() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const userUid = useSelector((state) => state.user.userUid);
 
-	console.log("test", productId in cartItems);
-
 	useEffect(() => {
 		async function fetchProductDetails() {
 			setLoading(true);
@@ -62,7 +60,6 @@ export default function ProductDetails() {
 				},
 				{ merge: true }
 			);
-			console.log("res", res);
 			setUpdatingData(false);
 		} catch (e) {
 			console.log("There was some error pls try again: ", e);
