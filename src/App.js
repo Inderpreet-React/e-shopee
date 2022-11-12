@@ -7,17 +7,18 @@ import Home from "./pages/Home";
 import ShoopingCart from "./pages/ShoopingCart";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
-import { onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { loginUser, logoutUser } from "./store/user";
 import { updateWishlist } from "./store/wishlist";
-import { updateCart } from "./store/cart";
+import { updateCart, updateTotal } from "./store/cart";
 
 function App() {
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const userUid = useSelector((state) => state.user.userUid);
+	const cartTotal = useSelector((state) => state.cart.cartTotal);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
 				if (doc.exists()) {
 					dispatch(updateWishlist(doc.data().userWishlist));
 					dispatch(updateCart(doc.data().userCart));
+					dispatch(updateTotal(doc.data().cartTotal));
 				} else {
 					console.log("There was some error fetching the data");
 				}
@@ -56,6 +58,19 @@ function App() {
 			dispatch(updateCart([]));
 		}
 	}, [isAuthenticated]);
+
+	useEffect(() => {
+		async function updateCartTotal() {
+			if (cartTotal === null || isNaN(cartTotal) || cartTotal < 0) {
+				console.log("setting cart total to 0");
+				await updateDoc(doc(db, "users", userUid), {
+					cartTotal: 0,
+				});
+			}
+		}
+
+		updateCartTotal();
+	}, [cartTotal]);
 
 	return (
 		<Routes>

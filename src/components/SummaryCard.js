@@ -1,4 +1,4 @@
-import { deleteField, doc, updateDoc } from "firebase/firestore";
+import { deleteField, doc, updateDoc, increment } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
@@ -24,6 +24,9 @@ export default function SummaryCard(props) {
 				[`userCart.${productId}`]: deleteField(),
 			});
 			setLoading(false);
+			await updateDoc(itemRef, {
+				cartTotal: increment(-Math.abs(price["price"] * quantity)),
+			});
 		} catch (e) {
 			console.log(e);
 			setLoading(false);

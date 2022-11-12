@@ -5,15 +5,14 @@ import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { updateTotal } from "../store/cart";
 
 export default function ShoopingCart() {
 	const [fetching, setFetching] = useState(false);
 	const [data, setData] = useState({});
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+	const cartTotal = useSelector((state) => state.cart.cartTotal);
 	const cartProducts = Object.keys(cartItems);
-	const [cartTotal, setCartTotal] = useState(0);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -55,12 +54,7 @@ export default function ShoopingCart() {
 						{!fetching ? (
 							<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll">
 								{Object.keys(data).map((item) => (
-									<SummaryCard
-										key={item}
-										productId={item}
-										data={data[item]}
-										setCartTotal={setCartTotal}
-									/>
+									<SummaryCard key={item} productId={item} data={data[item]} />
 								))}
 							</div>
 						) : (

@@ -2,7 +2,13 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
-import { arrayRemove, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+	arrayRemove,
+	doc,
+	increment,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function WishlistItem(props) {
@@ -17,6 +23,7 @@ export default function WishlistItem(props) {
 	const [loading, setLoading] = useState(false);
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const userUid = useSelector((state) => state.user.userUid);
+	const cartItems = useSelector((state) => state.cart.cartItem);
 
 	async function removeFromWishlist() {
 		setLoading(true);
@@ -25,8 +32,10 @@ export default function WishlistItem(props) {
 			await updateDoc(itemRef, {
 				userWishlist: arrayRemove(productId),
 			});
+			setLoading(false);
 		} catch (e) {
 			console.log(e);
+			setLoading(false);
 		}
 	}
 
@@ -37,6 +46,12 @@ export default function WishlistItem(props) {
 		setLoading(true);
 		try {
 			const cartRef = doc(db, "users", userUid);
+			await updateDoc(cartRef, {
+				userWishlist: arrayRemove(productId),
+			});
+			await updateDoc(cartRef, {
+				cartTotal: increment(price * quantity),
+			});
 			await setDoc(
 				cartRef,
 				{
@@ -46,7 +61,7 @@ export default function WishlistItem(props) {
 				},
 				{ merge: true }
 			);
-			removeFromWishlist();
+			setLoading(true);
 		} catch (e) {
 			console.log("There was some error pls try again: ", e);
 		}
@@ -95,13 +110,24 @@ export default function WishlistItem(props) {
 								<option value="XXXL">XXXL</option>
 							</select>
 						</div>
-						<button
-							disabled={loading}
-							onClick={addToCart}
-							className="bg-indigo-600 hover:bg-indigo-800 disabled:cursor-not-allowed text-white w-full py-2 flex rounded justify-center items-center"
-						>
-							Move to cart
-						</button>
+						{!(productId in cartItems) ? (
+							<button
+								disabled={loading}
+								onClick={addToCart}
+								className="bg-indigo-600 hover:bg-indigo-800 disabled:cursor-not-allowed text-white w-full py-2 flex rounded justify-center items-center"
+							>
+								Move to cart
+							</button>
+						) : (
+							<button className="bg-indigo-600 hover:bg-indigo-800 disabled:cursor-not-allowed text-white w-full py-2 flex rounded justify-center items-center">
+								<Link
+									className="flex items-center justify-center w-full h-full"
+									to="/cart"
+								>
+									Go to your Cart
+								</Link>
+							</button>
+						)}
 					</form>
 					<button
 						disabled={loading}

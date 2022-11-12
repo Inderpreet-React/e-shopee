@@ -2,7 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+	arrayUnion,
+	doc,
+	getDoc,
+	increment,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import PageLoader from "../components/PageLoader";
 
@@ -60,6 +67,11 @@ export default function ProductDetails() {
 				},
 				{ merge: true }
 			);
+			await updateDoc(cartRef, {
+				cartTotal: increment(
+					productDetails["price"] * quantityRef.current.value
+				),
+			});
 			setUpdatingData(false);
 		} catch (e) {
 			console.log("There was some error pls try again: ", e);
