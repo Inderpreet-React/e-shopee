@@ -3,6 +3,7 @@ import {
 	UserIcon,
 	ArrowRightOnRectangleIcon,
 	ShoppingBagIcon,
+	HeartIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -37,9 +38,18 @@ export default function Navbar() {
 						className="text-white h-7 w-7 hover:text-gray-200 cursor-pointer"
 					/>
 				)}
-				<Link to="/cart">
-					<ShoppingBagIcon className="text-white h-7 w-7 hover:text-gray-200" />
-				</Link>
+				{currentUser ? (
+					<>
+						<Link to="/wishlist">
+							<HeartIcon className="text-white h-7 w-7 hover:text-gray-200" />
+						</Link>
+						<Link to="/cart">
+							<ShoppingBagIcon className="text-white h-7 w-7 hover:text-gray-200" />
+						</Link>
+					</>
+				) : (
+					""
+				)}
 			</div>
 		</div>
 	);
