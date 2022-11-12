@@ -5,36 +5,40 @@ import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { updateTotal } from "../store/cart";
 
 export default function ShoopingCart() {
 	const [fetching, setFetching] = useState(false);
 	const [data, setData] = useState({});
 	const cartItems = useSelector((state) => state.cart.cartItem);
+	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const cartProducts = Object.keys(cartItems);
 	const [cartTotal, setCartTotal] = useState(0);
 
 	useEffect(() => {
 		async function fetchData() {
-			console.log("fetching");
-			setFetching(true);
-			try {
-				const querySnapshot = await getDocs(collection(db, "products"));
-				querySnapshot.forEach((doc) => {
-					if (cartProducts.includes(doc.id)) {
-						setData((prevState) => {
-							const newData = { ...prevState };
-							newData[doc.id] = doc.data();
-							newData[doc.id]["quantity"] = cartItems[doc.id]["quantity"];
-							newData[doc.id]["size"] = cartItems[doc.id]["size"];
-							return newData;
-						});
-					}
-				});
-				// cartTotal = cartTotal + data[item].price
-				setFetching(false);
-			} catch (e) {
-				console.log(e);
-				setFetching(false);
+			if (isAuthenticated) {
+				console.log("fetching");
+				setFetching(true);
+				try {
+					const querySnapshot = await getDocs(collection(db, "products"));
+					querySnapshot.forEach((doc) => {
+						if (cartProducts.includes(doc.id)) {
+							setData((prevState) => {
+								const newData = { ...prevState };
+								newData[doc.id] = doc.data();
+								newData[doc.id]["quantity"] = cartItems[doc.id]["quantity"];
+								newData[doc.id]["size"] = cartItems[doc.id]["size"];
+								return newData;
+							});
+						}
+					});
+					// cartTotal = cartTotal + data[item].price
+					setFetching(false);
+				} catch (e) {
+					console.log(e);
+					setFetching(false);
+				}
 			}
 		}
 
