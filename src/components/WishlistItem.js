@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { useSelector, useDispatch } from "react-redux";
-import { removeWishlistItem } from "../store/wishlist";
+import { useSelector } from "react-redux";
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -13,7 +12,6 @@ export default function WishlistItem(props) {
 	const price = data["price"];
 	const type = data["type"];
 	const pImg = data["pImg"];
-	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const userUid = useSelector((state) => state.user.userUid);
