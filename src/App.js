@@ -23,7 +23,16 @@ function App() {
 	useEffect(() => {
 		const unsub = onAuthStateChanged(auth, (user) => {
 			if (user) {
-				dispatch(loginUser(user));
+				const userName = user.displayName;
+				const uid = user.uid;
+				const email = user.email;
+				dispatch(
+					loginUser({
+						userName,
+						email,
+						uid,
+					})
+				);
 			} else {
 				dispatch(logoutUser());
 			}
