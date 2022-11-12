@@ -5,16 +5,11 @@ import { Link } from "react-router-dom";
 import LoginSvg from "../images/loginSvg.svg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../store/user";
 
 export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const userUid = useSelector((state) => state.user.userUid);
-	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	async function loginHandler(e) {
 		setLoading(true);
@@ -28,7 +23,7 @@ export default function Login() {
 			}
 
 			signInWithEmailAndPassword(auth, email.trim(), password.trim())
-				.then((response) => {
+				.then(() => {
 					setLoading(false);
 					navigate(-1);
 				})

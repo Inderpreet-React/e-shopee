@@ -1,19 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
-import itemSample from "../itemSample";
-import { addItem } from "../store/cart";
-import { addWishlistItem, removeWishlistItem } from "../store/wishlist";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	arrayUnion,
-	collection,
-	doc,
-	getDoc,
-	onSnapshot,
-	setDoc,
-	updateDoc,
-} from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import PageLoader from "../components/PageLoader";
 

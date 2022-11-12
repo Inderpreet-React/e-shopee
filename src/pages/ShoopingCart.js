@@ -3,7 +3,7 @@ import PageWrapper from "../PageWrapper";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
 import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function ShoopingCart() {
