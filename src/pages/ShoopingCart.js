@@ -15,6 +15,7 @@ export default function ShoopingCart() {
 
 	useEffect(() => {
 		async function fetchData() {
+			console.log("fetching");
 			setFetching(true);
 			try {
 				const querySnapshot = await getDocs(collection(db, "products"));
@@ -30,12 +31,6 @@ export default function ShoopingCart() {
 					}
 				});
 				// cartTotal = cartTotal + data[item].price
-				Object.keys(data).map((item) =>
-					setCartTotal((prevState) => {
-						const newValue = prevState + data[item]["price"];
-						return newValue;
-					})
-				);
 				setFetching(false);
 			} catch (e) {
 				console.log(e);
@@ -44,7 +39,7 @@ export default function ShoopingCart() {
 		}
 
 		fetchData();
-	}, []);
+	}, [cartItems]);
 
 	const cartHasItems = Object.keys(cartItems).length === 0;
 
@@ -56,7 +51,12 @@ export default function ShoopingCart() {
 						{!fetching ? (
 							<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll">
 								{Object.keys(data).map((item) => (
-									<SummaryCard key={item} productId={item} data={data[item]} />
+									<SummaryCard
+										key={item}
+										productId={item}
+										data={data[item]}
+										setCartTotal={setCartTotal}
+									/>
 								))}
 							</div>
 						) : (
