@@ -35,7 +35,7 @@ export default function Wishlist() {
 		}
 
 		fetchData();
-	}, []);
+	}, [wishlistItems]);
 
 	return (
 		<div className="h-full md:h-screen w-full bg-gray-100 md:p-8 overflow-y-auto">
