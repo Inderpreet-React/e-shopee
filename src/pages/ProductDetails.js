@@ -70,7 +70,7 @@ export default function ProductDetails() {
 	async function addToWishList() {
 		setUpdatingData(true);
 		try {
-			const docRef = doc(db, "users", userUid.payload.uid);
+			const docRef = doc(db, "users", userUid);
 			await updateDoc(docRef, {
 				userWishlist: arrayUnion(productId),
 			});
