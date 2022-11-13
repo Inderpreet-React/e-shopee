@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import PageLoader from "../components/PageLoader";
 
 export default function ProductDetails() {
 	const { productId } = useParams();
-	const quantityRef = useRef(1);
+	const [quantity, setQuantity] = useState(1);
 	const [size, setSize] = useState("");
 	const [sizeError, setSizeError] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -62,15 +62,13 @@ export default function ProductDetails() {
 				cartRef,
 				{
 					userCart: {
-						[productId]: { size: size, quantity: quantityRef.current.value },
+						[productId]: { size: size, quantity: quantity },
 					},
 				},
 				{ merge: true }
 			);
 			await updateDoc(cartRef, {
-				cartTotal: increment(
-					productDetails["price"] * quantityRef.current.value
-				),
+				cartTotal: increment(productDetails["price"] * quantity),
 			});
 			setUpdatingData(false);
 		} catch (e) {
@@ -204,7 +202,7 @@ export default function ProductDetails() {
 							</div>
 							<div className="flex flex-col gap-4 min-w-min">
 								<p>Quantity</p>
-								<select ref={quantityRef}>
+								<select onChange={(e) => setQuantity(parseInt(e.target.value))}>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
