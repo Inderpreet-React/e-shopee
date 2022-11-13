@@ -85,7 +85,10 @@ export default function ShoopingCart() {
 										<tr>
 											<th className="text-left py-2">Total Amount</th>
 											<td className="text-right">
-												₹ {cartTotal + cartTotal * (18 / 100)}
+												₹{" "}
+												{parseFloat(cartTotal + cartTotal * (18 / 100)).toFixed(
+													2
+												)}
 											</td>
 										</tr>
 									</tbody>
