@@ -55,6 +55,9 @@ export default function SummaryCard(props) {
 							Size: {size}
 						</span>
 						<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
+							₹ {price}/-
+						</span>
+						<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
 							Qty: {quantity}
 						</span>
 					</div>

@@ -32,7 +32,6 @@ export default function ShoopingCart() {
 							});
 						}
 					});
-					// cartTotal = cartTotal + data[item].price
 					setFetching(false);
 				} catch (e) {
 					console.log(e);
