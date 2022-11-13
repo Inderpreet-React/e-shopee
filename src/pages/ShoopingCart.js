@@ -3,16 +3,26 @@ import PageWrapper from "../PageWrapper";
 import shoppingCartSvg from "../images/shoppingCartSvg.svg";
 import SummaryCard from "../components/SummaryCard";
 import { useSelector } from "react-redux";
-import { collection, getDocs } from "firebase/firestore";
+import {
+	arrayUnion,
+	collection,
+	doc,
+	getDocs,
+	Timestamp,
+	updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function ShoopingCart() {
 	const [fetching, setFetching] = useState(false);
+	const [placingOrder, setPlacingOrder] = useState(false);
 	const [data, setData] = useState({});
 	const cartItems = useSelector((state) => state.cart.cartItem);
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 	const cartTotal = useSelector((state) => state.cart.cartTotal);
 	const cartProducts = Object.keys(cartItems);
+	const userUid = useSelector((state) => state.user.userUid);
+	const docRef = doc(db, "users", userUid);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -43,11 +53,48 @@ export default function ShoopingCart() {
 		fetchData();
 	}, [cartItems]);
 
-	const cartHasItems = Object.keys(cartItems).length === 0;
+	const setOrder = async () => {
+		const payload = {
+			[Timestamp.now()]: { items: { ...cartItems }, total: cartTotal },
+		};
+		await updateDoc(docRef, {
+			previousOrders: arrayUnion(payload),
+		});
+		console.log("previous order updated");
+	};
+
+	const emptyCart = async () => {
+		await updateDoc(docRef, {
+			userCart: {},
+		});
+		console.log("user cart empty");
+	};
+
+	const resetTotal = async () => {
+		await updateDoc(docRef, {
+			cartTotal: 0,
+		});
+		console.log("Cart total set to 0");
+		setPlacingOrder(false);
+	};
+
+	async function placeOrderHandler() {
+		setPlacingOrder(true);
+		try {
+			if (isAuthenticated) {
+				setOrder();
+				emptyCart();
+				resetTotal();
+			}
+		} catch (e) {
+			console.log("There was some error", e);
+			setPlacingOrder(false);
+		}
+	}
 
 	return (
 		<PageWrapper>
-			{!cartHasItems ? (
+			{!(Object.keys(cartItems).length === 0) ? (
 				<div className="flex w-full h-full md:flex-row flex-col">
 					<div className="flex flex-col md:flex-row p-4 md:p-8  w-full md:w-2/3 h-full">
 						{!fetching ? (
@@ -93,7 +140,11 @@ export default function ShoopingCart() {
 										</tr>
 									</tbody>
 								</table>
-								<button className="p-2 bg-indigo-500 text-white w-full hover:bg-indigo-600">
+								<button
+									disabled={placingOrder}
+									onClick={placeOrderHandler}
+									className="p-2 bg-indigo-500 disabled:cursor-not-allowed text-white w-full hover:bg-indigo-600"
+								>
 									Place Order
 								</button>
 							</div>
