@@ -59,19 +59,6 @@ function App() {
 		}
 	}, [isAuthenticated]);
 
-	useEffect(() => {
-		async function updateCartTotal() {
-			if (cartTotal === null || isNaN(cartTotal) || cartTotal < 0) {
-				console.log("setting cart total to 0");
-				await updateDoc(doc(db, "users", userUid), {
-					cartTotal: 0,
-				});
-			}
-		}
-
-		updateCartTotal();
-	}, [cartTotal]);
-
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />

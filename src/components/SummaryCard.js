@@ -20,13 +20,15 @@ export default function SummaryCard(props) {
 		setLoading(false);
 		try {
 			const itemRef = doc(db, "users", userUid);
+			console.log("part  ran");
+			console.log(-Math.abs(price * quantity));
+			await updateDoc(itemRef, {
+				cartTotal: increment(-Math.abs(price * quantity)),
+			});
 			await updateDoc(itemRef, {
 				[`userCart.${productId}`]: deleteField(),
 			});
 			setLoading(false);
-			await updateDoc(itemRef, {
-				cartTotal: increment(-Math.abs(price["price"] * quantity)),
-			});
 		} catch (e) {
 			console.log(e);
 			setLoading(false);
@@ -65,7 +67,9 @@ export default function SummaryCard(props) {
 					</button>
 				</div>
 			</div>
-			<div className="font-semibold whitespace-nowrap">₹ {price}/-</div>
+			<div className="font-semibold whitespace-nowrap">
+				₹ {price * quantity}/-
+			</div>
 		</div>
 	);
 }
