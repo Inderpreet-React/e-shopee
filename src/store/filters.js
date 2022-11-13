@@ -1,35 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { items: [], size: [], sort: "h" };
+const initialState = { items: [], fetching: false, isFiltered: false };
 
 const filterSlice = createSlice({
 	name: "filter",
 	initialState,
 	reducers: {
-		addFilterItem(state, action) {
-			state.items.push(action.payload);
+		updateFilterItems(state, action) {
+			state.items = action.payload;
 		},
-		removeFilterItem(state, action) {
-			delete state.items[action.payload];
+		isFetching(state, action) {
+			state.fetching = action.payload;
 		},
-		addFilterSize(state, action) {
-			state.size.push(action.payload);
-		},
-		removeFilterSize(state, action) {
-			delete state.size[action.payload];
-		},
-		changeFilterSort(state, action) {
-			state.sort = action.payload;
+		updateIsFiltered(state, action) {
+			state.isFiltered = action.payload;
 		},
 	},
 });
 
 const { actions, reducer } = filterSlice;
-export const {
-	addFilterItem,
-	removeFilterItem,
-	addFilterSize,
-	removeFilterSize,
-	changeFilterSort,
-} = actions;
+export const { updateFilterItems, isFetching, updateIsFiltered } = actions;
 export default reducer;
