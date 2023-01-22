@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import LoginSvg from "../images/loginSvg.svg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
 	const [loading, setLoading] = useState(false);
@@ -40,12 +41,7 @@ export default function Login() {
 
 	return (
 		<PageWrapper>
-			<Link
-				to="/"
-				className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl"
-			>
-				E-Shopee
-			</Link>
+			<Navbar />
 			<div className="h-1/4 w-full bg-indigo-100 md:order-last md:h-3/4 md:w-2/3">
 				<img src={LoginSvg} alt="login" className="h-full w-full" />
 			</div>

@@ -38,7 +38,7 @@ export default function Home() {
 			{!loading ? (
 				<>
 					<Navbar />
-					<div className="p-4 h-screen md:h-[92vh] w-full flex gap-8">
+					<div className="p-4 mt-12 h-screen md:h-[92vh] w-full flex gap-8">
 						<Filters />
 
 						<div className="flex flex-wrap gap-8 overflow-y-auto h-full w-full">

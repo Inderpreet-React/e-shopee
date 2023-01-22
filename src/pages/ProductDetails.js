@@ -96,7 +96,7 @@ export default function ProductDetails() {
 			{!loading ? (
 				<>
 					<Navbar />
-					<div className="p-4 md:p-8 md:py-4 h-screen md:h-[92vh] w-full flex flex-col gap-8 md:flex-row">
+					<div className="p-4 mt-12 md:p-8 md:py-4 h-screen md:h-[92vh] w-full flex flex-col gap-8 md:flex-row">
 						<div className="flex justify-center gap-6 w-full md:w-1/2 flex-wrap">
 							{Images.map((link, k) => (
 								<div className="w-2/5 md:w-2/5 h-auto">

@@ -10,6 +10,7 @@ import SelectCity from "../components/SelectCity";
 import SelectState from "../components/SelectState";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../store/user";
+import Navbar from "../components/Navbar";
 
 export default function Signup() {
 	const [loading, setLoading] = useState(false);
@@ -57,12 +58,7 @@ export default function Signup() {
 
 	return (
 		<PageWrapper heightFull={true}>
-			<Link
-				to="/"
-				className="absolute top-5 left-5 text-xl font-extrabold text-indigo-500 md:text-3xl"
-			>
-				E-Shopee
-			</Link>
+			<Navbar />
 
 			<div className="flex h-1/4 w-full items-center justify-center bg-indigo-100 md:order-last md:h-3/4 md:w-2/3">
 				<img

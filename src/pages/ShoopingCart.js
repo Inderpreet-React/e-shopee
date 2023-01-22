@@ -12,6 +12,7 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import Navbar from "../components/Navbar";
 
 export default function ShoopingCart() {
 	const [fetching, setFetching] = useState(false);
@@ -94,6 +95,7 @@ export default function ShoopingCart() {
 
 	return (
 		<PageWrapper>
+			<Navbar />
 			{!(Object.keys(cartItems).length === 0) ? (
 				<div className="flex w-full h-full md:flex-row flex-col">
 					<div className="flex flex-col md:flex-row p-4 md:p-8  w-full md:w-2/3 h-full">

@@ -23,7 +23,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<div className="items-center justify-between flex pl-4 pr-4 md:pr-10 py-2 h-full bg-indigo-500">
+		<div className="items-center z-20 fixed top-0 left-0 w-full h-12 justify-between flex pl-4 pr-4 md:pr-10 py-2 bg-indigo-500">
 			<Link to="/" className="font-semibold text-white text-2xl">
 				E-Shopee
 			</Link>
