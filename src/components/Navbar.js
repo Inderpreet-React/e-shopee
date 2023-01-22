@@ -29,23 +29,43 @@ export default function Navbar() {
 			</Link>
 			<div className="flex gap-4">
 				{!currentUser ? (
-					<Link to="/login">
-						<UserIcon className="text-white h-7 w-7" />
-					</Link>
+					<div className=" relative group">
+						<Link to="/login">
+							<UserIcon className="text-white h-7 w-7" />
+						</Link>
+						<div className="absolute top-[110%] -left-2 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
+							Login
+						</div>
+					</div>
 				) : (
-					<ArrowRightOnRectangleIcon
-						onClick={logoutHandler}
-						className="text-white h-7 w-7 hover:text-gray-200 cursor-pointer"
-					/>
+					<div className=" relative group">
+						<ArrowRightOnRectangleIcon
+							onClick={logoutHandler}
+							className="text-white h-7 w-7 hover:text-gray-200 cursor-pointer"
+						/>
+						<div className="absolute top-[110%] -left-3 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
+							Logout
+						</div>
+					</div>
 				)}
 				{currentUser ? (
 					<>
-						<Link to="/wishlist">
-							<HeartIcon className="text-white h-7 w-7 hover:text-gray-200" />
-						</Link>
-						<Link to="/cart">
-							<ShoppingBagIcon className="text-white h-7 w-7 hover:text-gray-200" />
-						</Link>
+						<div className="relative group">
+							<Link to="/wishlist" className="relative group">
+								<HeartIcon className="text-white h-7 w-7 hover:text-gray-200" />
+							</Link>
+							<div className="absolute top-[110%] -left-4 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
+								Wishlist
+							</div>
+						</div>
+						<div className="relative group">
+							<Link to="/cart">
+								<ShoppingBagIcon className="text-white h-7 w-7 hover:text-gray-200" />
+							</Link>
+							<div className="absolute top-[110%] -left-1 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
+								Cart
+							</div>
+						</div>
 					</>
 				) : (
 					""
