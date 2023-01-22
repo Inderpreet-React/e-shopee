@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 export default function Wishlist() {
 	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
@@ -58,6 +59,12 @@ export default function Wishlist() {
 							<h1 className="text-2xl font-semibold text-gray-600 text-center">
 								Looks like your wishlist cart is empty...
 							</h1>
+							<p className="text-xl font-semibold text-gray-600">
+								Go back to{" "}
+								<Link to="/" className="text-violet-600 underline">
+									home page
+								</Link>
+							</p>
 						</div>
 					)}
 				</div>
