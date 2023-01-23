@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 export default function ShoopingCart() {
 	const [fetching, setFetching] = useState(false);
@@ -164,6 +165,9 @@ export default function ShoopingCart() {
 					<p className="mt-4 text-gray-800">
 						Please have something soon, carts have feeling too.
 					</p>
+					<Link to="/" className="text-violet-600 underline font-semibold">
+						Home page
+					</Link>
 				</div>
 			)}
 		</PageWrapper>
