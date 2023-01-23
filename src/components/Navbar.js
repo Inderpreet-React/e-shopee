@@ -15,7 +15,7 @@ import { logoutUser } from "../store/user";
 export default function Navbar() {
 	const currentUser = useSelector((state) => state.user.isAuthenticated);
 	const cartItems = useSelector((state) => state.cart.cartItem);
-	console.log(cartItems);
+	const wishlistItems = useSelector((state) => state.wishlist.wishlistItem);
 	const dispatch = useDispatch();
 
 	function logoutHandler() {
@@ -59,19 +59,24 @@ export default function Navbar() {
 							<div className="absolute top-[110%] -left-4 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
 								Wishlist
 							</div>
+							{Object.keys(wishlistItems).length > 0 ? (
+								<div className="absolute left-[70%] top-[60%] text-white flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
+									{Object.keys(wishlistItems).length}
+								</div>
+							) : null}
 						</div>
 						<div className="relative group">
 							<Link to="/cart">
 								<ShoppingBagIcon className="text-white relative h-7 w-7 hover:text-gray-200" />
-								{Object.keys(cartItems).length > 0 ? (
-									<div className="absolute left-[90%] top-[60%] text-white flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
-										{Object.keys(cartItems).length}
-									</div>
-								) : null}
 							</Link>
 							<div className="absolute top-[110%] -left-1 font-bold text-gray-900 group-hover:opacity-100 opacity-0">
 								Cart
 							</div>
+							{Object.keys(cartItems).length > 0 ? (
+								<div className="absolute left-[90%] top-[60%] text-white flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
+									{Object.keys(cartItems).length}
+								</div>
+							) : null}
 						</div>
 					</>
 				) : (
