@@ -1,9 +1,11 @@
 import React from "react";
 import LoadingPageSvg from "../images/LoadingPageSvg.svg";
+import Navbar from "./Navbar";
 
 export default function PageLoader(props) {
 	return (
 		<div className="flex flex-col items-center justify-center h-screen w-screen bg-indigo-100">
+			<Navbar />
 			<div className="text-center">
 				<div className="w-96 h-auto">
 					<img className="w-full h-full" src={LoadingPageSvg} alt="loading" />
