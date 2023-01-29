@@ -165,7 +165,10 @@ export default function ShoopingCart() {
 					<p className="mt-4 text-gray-800">
 						Please have something soon, carts have feeling too.
 					</p>
-					<Link to="/" className="text-violet-600 underline font-semibold">
+					<Link
+						to="/"
+						className="text-violet-600 underline font-semibold text-xl"
+					>
 						Home page
 					</Link>
 				</div>

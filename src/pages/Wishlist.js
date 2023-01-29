@@ -61,8 +61,8 @@ export default function Wishlist() {
 							</h1>
 							<p className="text-xl font-semibold text-gray-600">
 								Go back to{" "}
-								<Link to="/" className="text-violet-600 underline">
-									home page
+								<Link to="/" className="text-violet-600 underline text-xl">
+									Home page
 								</Link>
 							</p>
 						</div>
