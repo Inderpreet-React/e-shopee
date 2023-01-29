@@ -4,6 +4,8 @@ import {
 	updateFilterItems,
 	isFetching,
 	updateIsFiltered,
+	setFiltersValue,
+	resetFilterValues,
 } from "../store/filters";
 import { useDispatch, useSelector } from "react-redux";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
@@ -30,7 +32,7 @@ export default function Filters() {
 	const p = useRef(false);
 	const fetching = useSelector((state) => state.filter.fetching);
 	const isFiltered = useSelector((state) => state.filter.isFiltered);
-
+	const filtersValue = useSelector((state) => state.filter.filters);
 	const tempItems = [];
 
 	const dispatch = useDispatch();
@@ -64,6 +66,7 @@ export default function Filters() {
 			a.current.checked = false;
 			a.current.checked = false;
 			dispatch(updateIsFiltered(false));
+			dispatch(resetFilterValues());
 		} else {
 			console.log("F U");
 			return;
@@ -207,9 +210,10 @@ export default function Filters() {
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input
-							checked={tShirt}
+							checked={filtersValue["tshirt"]}
 							type="checkbox"
 							onChange={(e) => {
+								dispatch(setFiltersValue(["tshirt", e.target.checked]));
 								setTshirt(e.target.checked);
 							}}
 						/>
@@ -217,9 +221,10 @@ export default function Filters() {
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={shirt}
+							checked={filtersValue["shirt"]}
 							type="checkbox"
 							onChange={(e) => {
+								dispatch(setFiltersValue(["shirt", e.target.checked]));
 								setShirt(e.target.checked);
 							}}
 						/>
@@ -227,9 +232,10 @@ export default function Filters() {
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={jeans}
+							checked={filtersValue["jeans"]}
 							type="checkbox"
 							onChange={(e) => {
+								dispatch(setFiltersValue(["jeans", e.target.checked]));
 								setJeans(e.target.checked);
 							}}
 						/>
@@ -237,9 +243,10 @@ export default function Filters() {
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={joggers}
+							checked={filtersValue["joggers"]}
 							type="checkbox"
 							onChange={(e) => {
+								dispatch(setFiltersValue(["joggers", e.target.checked]));
 								setJoggers(e.target.checked);
 							}}
 						/>
@@ -247,9 +254,10 @@ export default function Filters() {
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={pajamas}
+							checked={filtersValue["pajamas"]}
 							type="checkbox"
 							onChange={(e) => {
+								dispatch(setFiltersValue(["pajamas", e.target.checked]));
 								setPajamas(e.target.checked);
 							}}
 						/>
@@ -260,49 +268,67 @@ export default function Filters() {
 				<div className="flex flex-col pl-2">
 					<div className={divWrapper}>
 						<input
-							checked={XS}
+							checked={filtersValue["XS"]}
 							type="checkbox"
-							onChange={(e) => setXS(e.target.checked)}
+							onChange={(e) => {
+								setXS(e.target.checked);
+								dispatch(setFiltersValue(["XS", e.target.checked]));
+							}}
 						/>
 						<span>XS</span>
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={S}
+							checked={filtersValue["S"]}
 							type="checkbox"
-							onChange={(e) => setS(e.target.checked)}
+							onChange={(e) => {
+								setS(e.target.checked);
+								dispatch(setFiltersValue(["S", e.target.checked]));
+							}}
 						/>
 						<span>S</span>
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={M}
+							checked={filtersValue["M"]}
 							type="checkbox"
-							onChange={(e) => setM(e.target.checked)}
+							onChange={(e) => {
+								setM(e.target.checked);
+								dispatch(setFiltersValue(["M", e.target.checked]));
+							}}
 						/>
 						<span>M</span>
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={L}
+							checked={filtersValue["L"]}
 							type="checkbox"
-							onChange={(e) => setL(e.target.checked)}
+							onChange={(e) => {
+								setL(e.target.checked);
+								dispatch(setFiltersValue(["L", e.target.checked]));
+							}}
 						/>
 						<span>L</span>
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={XL}
+							checked={filtersValue["XL"]}
 							type="checkbox"
-							onChange={(e) => setXL(e.target.checked)}
+							onChange={(e) => {
+								setXL(e.target.checked);
+								dispatch(setFiltersValue(["XL", e.target.checked]));
+							}}
 						/>
 						<span>XL</span>
 					</div>
 					<div className={divWrapper}>
 						<input
-							checked={XXL}
+							checked={filtersValue["XXL"]}
 							type="checkbox"
-							onChange={(e) => setXXL(e.target.checked)}
+							onChange={(e) => {
+								setXXL(e.target.checked);
+								dispatch(setFiltersValue(["XXL", e.target.checked]));
+							}}
 						/>
 						<span>XXL</span>
 					</div>
