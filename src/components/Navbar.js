@@ -60,7 +60,7 @@ export default function Navbar() {
 								Wishlist
 							</div>
 							{Object.keys(wishlistItems).length > 0 ? (
-								<div className="absolute left-[70%] top-[60%] text-white flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
+								<div className="absolute left-[70%] top-[60%] bg-white text-indigo-600 flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
 									{Object.keys(wishlistItems).length}
 								</div>
 							) : null}
@@ -73,7 +73,7 @@ export default function Navbar() {
 								Cart
 							</div>
 							{Object.keys(cartItems).length > 0 ? (
-								<div className="absolute left-[90%] top-[60%] text-white flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
+								<div className="absolute left-[90%] top-[60%] bg-white text-indigo-600 flex items-center justify-center font-bold rounded-full w-5 h-5 border-2 border-white">
 									{Object.keys(cartItems).length}
 								</div>
 							) : null}
