@@ -14,6 +14,7 @@ export default function SummaryCard(props) {
 	const productId = props.productId;
 	const size = props.size;
 	const quantity = props.quantity;
+	const [isloading, setIsLoading] = useState(false);
 	const [data, setData] = useState({});
 	const userUid = useSelector((state) => state.user.userUid);
 	const loading = useSelector((state) => state.cart.loading);
@@ -23,10 +24,12 @@ export default function SummaryCard(props) {
 
 	useEffect(() => {
 		const getDetails = async () => {
+			setIsLoading(true);
 			const docRef = doc(db, "products", productId);
 			const docSnap = await getDoc(docRef);
 			console.log(docSnap.data());
 			setData(docSnap.data());
+			setIsLoading(false);
 		};
 		if (isAuthenticated) {
 			getDetails();
@@ -55,39 +58,47 @@ export default function SummaryCard(props) {
 	}
 
 	return (
-		<div className="flex gap-4">
-			<img
-				className="w-28 md:w-36 rounded-md h-auto"
-				src={data?.pImg}
-				alt="product"
-			/>
-			<div className="flex text-gray-600 justify-between w-full">
-				<div className="flex flex-col ">
-					<h3 className="text-lg font-semibold">{data?.name}</h3>
-					<h4 className="text-xs">{data?.type}</h4>
-					<div className="flex gap-4 mt-4">
-						<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
-							Size: {size}
-						</span>
-						<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
-							₹ {data?.price}/-
-						</span>
-						<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
-							Qty: {quantity}
-						</span>
+		<div className="flex gap-4 p-1">
+			{!isloading ? (
+				<>
+					<img
+						className="w-28 md:w-36 rounded-md h-auto"
+						src={data?.pImg}
+						alt="product"
+					/>
+					<div className="flex text-gray-600 justify-between w-full">
+						<div className="flex flex-col ">
+							<h3 className="text-lg font-semibold">{data?.name}</h3>
+							<h4 className="text-xs">{data?.type}</h4>
+							<div className="flex gap-4 mt-4">
+								<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
+									Size: {size}
+								</span>
+								<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
+									₹ {data?.price}/-
+								</span>
+								<span className="text-sm font-semibold border-2 border-gray-300 rounded p-1 ">
+									Qty: {quantity}
+								</span>
+							</div>
+							<button
+								disabled={loading}
+								onClick={removeItemHandler}
+								className=" bg-indigo-500 disabled:bg-indigo-600 disabled:cursor-not-allowed rounded p-1 text-white min-w-min mt-4 hover:bg-indigo-600"
+							>
+								Remove
+							</button>
+						</div>
 					</div>
-					<button
-						disabled={loading}
-						onClick={removeItemHandler}
-						className=" bg-indigo-500 disabled:bg-indigo-600 disabled:cursor-not-allowed rounded p-1 text-white min-w-min mt-4 hover:bg-indigo-600"
-					>
-						Remove
-					</button>
+					<div className="font-semibold whitespace-nowrap">
+						₹ {data?.price * quantity}/-
+					</div>
+				</>
+			) : (
+				<div className="h-36 flex flex-col justify-center items-center">
+					<p>Loading product details</p>
 				</div>
-			</div>
-			<div className="font-semibold whitespace-nowrap">
-				₹ {data?.price * quantity}/-
-			</div>
+			)}
 		</div>
 	);
 }

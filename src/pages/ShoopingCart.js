@@ -70,7 +70,7 @@ export default function ShoopingCart() {
 				<div className="flex w-full h-full md:flex-row flex-col">
 					<div className="flex flex-col md:flex-row p-4 md:p-8  w-full md:w-2/3 h-full">
 						{!fetching ? (
-							<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll">
+							<div className="p-4 bg-white w-full rounded border-2 border-gray-400 h-full flex-col flex gap-4 overflow-y-scroll divide-y-2">
 								{Object.keys(cartItems).map((data) => (
 									<SummaryCard
 										key={data}
