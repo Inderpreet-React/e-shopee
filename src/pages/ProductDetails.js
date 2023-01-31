@@ -62,7 +62,11 @@ export default function ProductDetails() {
 				cartRef,
 				{
 					userCart: {
-						[productId]: { size: size, quantity: quantity },
+						[`${productId}${size}`]: {
+							size: size,
+							quantity: quantity,
+							productId: productId,
+						},
 					},
 				},
 				{ merge: true }
