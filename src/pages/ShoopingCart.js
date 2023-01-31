@@ -53,7 +53,7 @@ export default function ShoopingCart() {
 		}
 
 		fetchData();
-	}, [cartItems]);
+	}, []);
 
 	const setOrder = async () => {
 		const payload = {
