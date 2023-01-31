@@ -1,11 +1,11 @@
 import { deleteField, doc, updateDoc, increment } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../store/cart";
 
 export default function SummaryCard(props) {
 	const productId = props.productId;
-	const [loading, setLoading] = useState(false);
 	const data = props.data;
 	const name = data["name"];
 	const type = data["type"];
@@ -15,9 +15,11 @@ export default function SummaryCard(props) {
 	const price = data["price"];
 	const userUid = useSelector((state) => state.user.userUid);
 	const cartItems = useSelector((state) => state.cart.cartItem);
+	const loading = useSelector((state) => state.cart.loading);
+	const dispatch = useDispatch();
 
 	async function removeItemHandler() {
-		setLoading(false);
+		dispatch(setLoading(true));
 		try {
 			const itemRef = doc(db, "users", userUid);
 			console.log("part  ran");
@@ -28,7 +30,7 @@ export default function SummaryCard(props) {
 			await updateDoc(itemRef, {
 				[`userCart.${productId}`]: deleteField(),
 			});
-			setLoading(false);
+			dispatch(setLoading(false));
 		} catch (e) {
 			console.log(e);
 			setLoading(false);
